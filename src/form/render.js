@@ -43,8 +43,9 @@ const render = ({ form, state = null, data = [], host = null }) => {
     submit,
   } = form;
 
-  input.label.textContent = 'Поиск';
-  submit.value = 'Добавить';
+  input.label.textContent = 'RSS url';
+  input.element.placeholder = 'RSS url';
+  submit.value = 'Add';
 
   // Return if this is first render
   if (state === null) return;

@@ -55,15 +55,17 @@ class App {
       return this;
     }
 
-    const [path] = data;
-    const pathKey = path.split('.')[0];
+    const [path, ...restDataValues] = data;
+    const [pathKey, ...restPathKeys] = path.split('.');
+    const restPath = restPathKeys.join('.');
+    const restData = [restPath, ...restDataValues];
 
     if (pathKey === 'form') {
-      this.form.render({ state: this.state, data });
+      this.form.render({ state: this.state.form, data: restData });
     }
 
     if (pathKey === 'feeds') {
-      this.renderFeeds({ state: this.state, data });
+      this.renderFeeds({ state: this.state.feeds, data: restData });
     }
 
     return this;
@@ -74,7 +76,15 @@ class App {
   }
 
   subscribe() {
-    this.form.subscribe({ state: this.state });
+    this.form.subscribe({
+      state: this.state.form,
+      onInput: (value) => {
+        // console.log('input: ', value);
+      },
+      onSubmit: (value) => {
+        // console.log('submit: ', value);
+      },
+    });
 
     return this;
   }

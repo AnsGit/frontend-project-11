@@ -16,14 +16,14 @@ class Form {
     return this;
   }
 
-  render({ state = null, data = [], host = null }) {
-    render({ form: this.dom, state, data, host });
+  render(props) {
+    render({ form: this.dom, ...props });
 
     return this;
   }
 
-  subscribe({ state = null }) {
-    subscribe({ form: this.dom, state });
+  subscribe(props) {
+    subscribe({ form: this.dom, ...props });
 
     return this;
   }
@@ -31,7 +31,10 @@ class Form {
   static state() {
     return {
       status: 'processing',
-      input: { value: '' },
+      input: {
+        value: '',
+        result: null, // { type: '', errors: '' }
+      },
     };
   }
 }

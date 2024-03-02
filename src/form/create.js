@@ -1,7 +1,8 @@
 const create = () => {
-  const view = document.createElement('form');
-  view.id = 'rss-form';
-  view.classList.add('rss-form');
+  const element = document.createElement('form');
+  element.method = 'post';
+  element.id = 'rss-form';
+  element.classList.add('rss-form');
 
   // Inputs
   const inputGroup = document.createElement('div');
@@ -12,6 +13,7 @@ const create = () => {
 
   const input = document.createElement('input');
 
+  input.name = 'url';
   input.type = 'text';
   input.id = 'rss-form__link-input';
   input.classList.add('form-control');
@@ -24,13 +26,16 @@ const create = () => {
   submit.classList.add('btn', 'btn-primary');
 
   // Build all
-  view.append(inputGroup, submit);
+  element.append(inputGroup, submit);
 
   return {
-    view,
+    element,
     group: {
-      view: inputGroup,
-      input: { view: input, label: inputLabel },
+      element: inputGroup,
+      input: {
+        element: input,
+        label: inputLabel,
+      },
     },
     submit,
   };

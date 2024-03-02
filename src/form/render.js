@@ -6,7 +6,7 @@ const clearInputFeedback = (input) => {
   while (true) {
     const nextSibling = input.element.nextElementSibling;
 
-    if (nextSibling && nextSibling.classList.contains('invalid-feedback')) {
+    if (nextSibling && nextSibling.classList.contains('feedback')) {
       nextSibling.remove();
       continue;
     }
@@ -18,16 +18,15 @@ const clearInputFeedback = (input) => {
 const renderInputFeedback = (input, result) => {
   clearInputFeedback(input);
 
-  const isError = Boolean(result?.errors?.length);
+  const isError = Boolean(result?.type !== 'success');
 
-  if (!isError) return;
+  input.element.classList.toggle('is-invalid', isError);
 
-  input.element.classList.add('is-invalid');
-
-  result.errors.forEach((text) => {
+  result.messages.forEach((text) => {
     const error = document.createElement('div');
 
-    error.classList.add('invalid-feedback');
+    error.classList.add('feedback');
+    error.classList.add(isError ? 'invalid-feedback' : 'valid-feedback');
     error.textContent = text;
 
     input.element.after(error);

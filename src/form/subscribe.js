@@ -21,11 +21,11 @@ const validate = ({ state, formSchema, form }) => {
   return formSchema
     .validate(formDataObject)
     .then((result) => {
-      state.input.result = { type: 'success' };
+      state.input.result = { type: 'success', messages: [] };
       return state;
     })
     .catch((data) => {
-      state.input.result = { type: data.name, errors: data.errors };
+      state.input.result = { type: data.name, messages: data.errors };
       return state;
     })
     .then((result) => {

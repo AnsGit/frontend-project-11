@@ -98,7 +98,7 @@ class App {
         if (isFeedExists) {
           state.input.result = {
             type: 'error',
-            errors: ['a feed with this url already exists'],
+            messages: ['a feed with this url already exists'],
           };
 
           return state;
@@ -106,6 +106,12 @@ class App {
 
         return this.addFeed(state.input.value).then(() => {
           state.input.value = '';
+
+          state.input.result = {
+            type: 'success',
+            messages: ['RSS added!'],
+          };
+
           return state;
         });
       },

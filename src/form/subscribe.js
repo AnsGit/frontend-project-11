@@ -2,7 +2,7 @@ import { STATUS } from './_data.js';
 import { object, string } from 'yup';
 
 const formSchema = object({
-  url: string().url().nonNullable(),
+  url: string().url().min(10),
 });
 
 const validate = ({ state, formSchema, form }) => {
@@ -22,13 +22,15 @@ const validate = ({ state, formSchema, form }) => {
     .validate(formDataObject)
     .then((result) => {
       state.input.result = { type: 'success' };
-      return result;
+      return state;
     })
     .catch((data) => {
       state.input.result = { type: data.name, errors: data.errors };
+      return state;
     })
     .then((result) => {
       state.status = STATUS.PROCESSING;
+      return state;
     });
 };
 
@@ -36,7 +38,7 @@ const subscribe = ({
   form,
   state = null,
   onInput = () => {},
-  onSubmit = () => {},
+  onSubmit = (state) => new Promise((resolve) => resolve(state)),
 }) => {
   const {
     element,
@@ -44,13 +46,35 @@ const subscribe = ({
   } = form;
 
   input.element.addEventListener('input', (e) => {
-    validate({ state, formSchema, form });
     onInput(state.input.value);
   });
 
   element.addEventListener('submit', (e) => {
     e.preventDefault();
-    onSubmit(state.input.value);
+
+    validate({ state, formSchema, form })
+      .then((state) => {
+        const isError = state.input.result.type !== 'success';
+
+        if (isError) throw new Error('error-gap');
+        return state;
+      })
+      .then((state) => {
+        state.status = STATUS.SENDING;
+        return state;
+      })
+      .then((state) => {
+        return onSubmit(state);
+      })
+      .then((state) => {
+        state.status = STATUS.PROCESSING;
+        return state;
+      })
+      .catch((error) => {
+        if (error.message !== 'error-gap') throw error;
+
+        return state;
+      });
   });
 };
 

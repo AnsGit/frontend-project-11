@@ -37,7 +37,7 @@ class App {
   initState() {
     const initialState = {
       form: Form.state(),
-      feeds: [],
+      feeds: [], // { url: '' }
     };
 
     this.state = onChange(initialState, this.render.bind(this));
@@ -75,14 +75,39 @@ class App {
     // ...
   }
 
+  addFeed(url) {
+    return new Promise((resolve) => {
+      this.state.feeds.push({ url });
+      resolve();
+    });
+  }
+
   subscribe() {
     this.form.subscribe({
       state: this.state.form,
       onInput: (value) => {
         // console.log('input: ', value);
       },
-      onSubmit: (value) => {
-        // console.log('submit: ', value);
+      onSubmit: (state) => {
+        if (state.input.result.type !== 'success') return state;
+
+        const isFeedExists = this.state.feeds.some(({ url }) => {
+          return url === state.input.value;
+        });
+
+        if (isFeedExists) {
+          state.input.result = {
+            type: 'error',
+            errors: ['a feed with this url already exists'],
+          };
+
+          return state;
+        }
+
+        return this.addFeed(state.input.value).then(() => {
+          state.input.value = '';
+          return state;
+        });
       },
     });
 

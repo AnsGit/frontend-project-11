@@ -33,7 +33,7 @@ class Form {
       status: 'processing',
       input: {
         value: '',
-        result: null, // { type: '', errors: '' }
+        result: { type: '', errors: '' },
       },
     };
   }

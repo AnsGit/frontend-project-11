@@ -1,5 +1,5 @@
 import i18n from 'i18next';
-import { STATUS } from './_data.js';
+import { STATUS } from '../const/index.js';
 
 const clearInputFeedback = (input) => {
   input.element.classList.remove('is-invalid');
@@ -28,7 +28,7 @@ const renderInputFeedback = (input, result) => {
 
     error.classList.add('feedback');
     error.classList.add(isError ? 'invalid-feedback' : 'valid-feedback');
-    error.textContent = i18n.t(`rss-form.input.feedback.${key}`, values);
+    error.textContent = i18n.t(`feedback.${key}`, values);
 
     input.element.after(error);
   });

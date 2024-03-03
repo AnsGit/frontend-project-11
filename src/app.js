@@ -1,7 +1,8 @@
 import onChange from 'on-change';
-import Form from './form/index.js';
+import requestRSS from './rss-parser/index.js';
+import Form from './rss-form/index.js';
 
-import { FEEDBACK } from './form/_data.js';
+import { FEEDBACK } from './const/index.js';
 
 class App {
   constructor(host) {
@@ -81,9 +82,11 @@ class App {
   }
 
   addFeed(url) {
-    return new Promise((resolve) => {
+    return requestRSS(url).then((result) => {
       this.state.feeds.push({ url });
-      resolve();
+
+      console.log('NEW RSS!!!!!!');
+      console.log(result);
     });
   }
 
@@ -109,16 +112,25 @@ class App {
           return state;
         }
 
-        return this.addFeed(state.input.value).then(() => {
-          state.input.value = '';
+        return this.addFeed(state.input.value)
+          .then(() => {
+            state.input.value = '';
 
-          state.input.result = {
-            type: 'success',
-            messages: [{ key: FEEDBACK.RSS_ADDED }],
-          };
+            state.input.result = {
+              type: 'success',
+              messages: [{ key: FEEDBACK.RSS_ADDED }],
+            };
 
-          return state;
-        });
+            return state;
+          })
+          .catch((err) => {
+            state.input.result = {
+              type: 'error',
+              messages: [{ key: FEEDBACK[err.code] }],
+            };
+
+            return state;
+          });
       },
     });
 

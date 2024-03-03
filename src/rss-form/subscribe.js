@@ -1,4 +1,4 @@
-import { STATUS, FEEDBACK } from './_data.js';
+import { STATUS, FEEDBACK } from '../const/index.js';
 import { object, string, setLocale } from 'yup';
 
 setLocale({
@@ -71,7 +71,7 @@ const subscribe = ({
         return state;
       })
       .then((state) => {
-        return onSubmit(state);
+        return onSubmit(state).then(() => state);
       })
       .then((state) => {
         state.status = STATUS.PROCESSING;

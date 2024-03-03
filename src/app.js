@@ -1,6 +1,8 @@
 import onChange from 'on-change';
 import Form from './form/index.js';
 
+import { FEEDBACK } from './form/_data.js';
+
 class App {
   constructor(host) {
     this.host = host;
@@ -72,7 +74,10 @@ class App {
   }
 
   renderFeeds({ state, data }) {
-    // ...
+    // const [path, value, previousValue, applyData] = data;
+    // console.log(applyData);
+
+    return this;
   }
 
   addFeed(url) {
@@ -98,7 +103,7 @@ class App {
         if (isFeedExists) {
           state.input.result = {
             type: 'error',
-            messages: ['a feed with this url already exists'],
+            messages: [{ key: FEEDBACK.EXISTING_RSS }],
           };
 
           return state;
@@ -109,7 +114,7 @@ class App {
 
           state.input.result = {
             type: 'success',
-            messages: ['RSS added!'],
+            messages: [{ key: FEEDBACK.RSS_ADDED }],
           };
 
           return state;

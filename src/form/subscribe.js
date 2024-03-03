@@ -1,5 +1,12 @@
-import { STATUS } from './_data.js';
-import { object, string } from 'yup';
+import { STATUS, FEEDBACK } from './_data.js';
+import { object, string, setLocale } from 'yup';
+
+setLocale({
+  string: {
+    url: ({ value }) => ({ key: FEEDBACK.INVALID_URL, values: { url: value } }),
+    min: ({ min }) => ({ key: FEEDBACK.SHORT_URL, values: { count: min } }),
+  },
+});
 
 const formSchema = object({
   url: string().url().min(10),
@@ -25,7 +32,7 @@ const validate = ({ state, formSchema, form }) => {
       return state;
     })
     .catch((data) => {
-      state.input.result = { type: data.name, messages: data.errors };
+      state.input.result = { type: data.name, messages: [data.message] };
       return state;
     })
     .then((result) => {

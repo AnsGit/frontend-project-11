@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import { STATUS } from './_data.js';
 
 const clearInputFeedback = (input) => {
@@ -22,12 +23,12 @@ const renderInputFeedback = (input, result) => {
 
   input.element.classList.toggle('is-invalid', isError);
 
-  result.messages.forEach((text) => {
+  result.messages.forEach(({ key, values = {} }) => {
     const error = document.createElement('div');
 
     error.classList.add('feedback');
     error.classList.add(isError ? 'invalid-feedback' : 'valid-feedback');
-    error.textContent = text;
+    error.textContent = i18n.t(`rss-form.input.feedback.${key}`, values);
 
     input.element.after(error);
   });
@@ -42,9 +43,9 @@ const render = ({ form, state = null, data = [], host = null }) => {
     submit,
   } = form;
 
-  input.label.textContent = 'RSS url';
-  input.element.placeholder = 'RSS url';
-  submit.value = 'Add';
+  input.label.textContent = i18n.t('rss-form.input.label');
+  input.element.placeholder = i18n.t('rss-form.input.placeholder');
+  submit.value = i18n.t('rss-form.submit');
 
   // Return if this is first render
   if (state === null) return;

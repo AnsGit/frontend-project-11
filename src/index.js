@@ -1,8 +1,18 @@
+import i18n from 'i18next';
+import locales from './locales/index.js';
+
 import App from './app.js';
 import './style.scss';
 
-const host = document.querySelector('#app');
+i18n
+  .init({
+    lng: 'ru',
+    debug: true,
+    resources: { ...locales },
+  })
+  .then(() => {
+    const host = document.querySelector('#app');
+    const app = new App(host);
 
-const app = new App(host);
-
-app.render().subscribe();
+    app.render().subscribe();
+  });

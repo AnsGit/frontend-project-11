@@ -1,5 +1,5 @@
-import render from './render.js';
 import create from './create.js';
+import render from './render.js';
 import subscribe from './subscribe.js';
 import './style.scss';
 

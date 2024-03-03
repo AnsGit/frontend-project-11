@@ -2,6 +2,8 @@ export const STATUS = {
   PROCESSING: 'processing',
   VALIDATING: 'validating',
   SENDING: 'sending',
+  SUCCESS: 'success',
+  ERROR: 'error',
 };
 
 export const FEEDBACK = {

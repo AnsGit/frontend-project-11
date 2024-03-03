@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import locales from './locales/index.js';
 
-import App from './app.js';
+import App from './app/index.js';
 import './style.scss';
 
 i18n

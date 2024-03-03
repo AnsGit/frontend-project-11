@@ -28,7 +28,7 @@ const validate = ({ state, formSchema, form }) => {
   return formSchema
     .validate(formDataObject)
     .then((result) => {
-      state.input.result = { type: 'success', messages: [] };
+      state.input.result = { type: STATUS.SUCCESS, messages: [] };
       return state;
     })
     .catch((data) => {
@@ -45,7 +45,7 @@ const subscribe = ({
   form,
   state = null,
   onInput = () => {},
-  onSubmit = (state) => new Promise((resolve) => resolve(state)),
+  onSubmit = (state) => Promise.resolve(state),
 }) => {
   const {
     element,
@@ -61,7 +61,7 @@ const subscribe = ({
 
     validate({ state, formSchema, form })
       .then((state) => {
-        const isError = state.input.result.type !== 'success';
+        const isError = state.input.result.type !== STATUS.SUCCESS;
 
         if (isError) throw new Error('error-gap');
         return state;

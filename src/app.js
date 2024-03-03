@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import onChange from 'on-change';
 import requestRSS from './rss-parser/index.js';
 import Form from './rss-form/index.js';
@@ -23,13 +24,37 @@ class App {
     // Main class
     const cls = 'rss-agregator';
 
+    // Head
     const head = document.createElement('div');
     head.classList.add(`${cls}__head`);
 
+    // Body
     const body = document.createElement('div');
-    body.classList.add(`${cls}__body`);
+    body.classList.add(`${cls}__body`, 'row');
 
-    this.dom = { head, body };
+    // Posts col
+    const posts = document.createElement('div');
+    posts.classList.add(`${cls}__body__posts`, 'col');
+
+    const postsTitle = document.createElement('h1');
+
+    // Feeds col
+    const feeds = document.createElement('div');
+    feeds.classList.add(`${cls}__body__feeds`, 'col');
+
+    const feedsTitle = document.createElement('h1');
+
+    posts.append(postsTitle);
+    feeds.append(feedsTitle);
+
+    body.append(posts, feeds);
+
+    this.dom = {
+      head,
+      body,
+      posts: { element: posts, title: postsTitle },
+      feeds: { element: feeds, title: feedsTitle },
+    };
 
     // Form
     this.form = new Form();
@@ -49,10 +74,15 @@ class App {
   }
 
   render(...data) {
+    this.dom.posts.title.textContent = i18n.t('posts');
+    this.dom.feeds.title.textContent = i18n.t('feeds');
+
     const isFirstRender = !data.length;
 
     if (isFirstRender) {
       this.host.append(this.dom.head, this.dom.body);
+      this.host.classList.add('rss-agregator');
+
       this.form.render({ host: this.dom.head });
 
       return this;

@@ -21,5 +21,8 @@ export default {
       'err-xml': 'page is not an RSS source',
       'err-rss': 'RSS reading error; try another address',
     },
+
+    posts: 'Posts',
+    feeds: 'Feeds',
   },
 };

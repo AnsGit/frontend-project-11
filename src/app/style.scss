@@ -1,0 +1,24 @@
+$cls: 'rss-agregator';
+
+.#{$cls} {
+  &__head {
+    padding: 40px 0 16px;
+    background-color: var(--bs-highlight-bg);
+  }
+
+  &__body {
+    padding: 20px;
+
+    & > .col {
+      max-width: 510px;
+    }
+
+    &__feeds__body {
+      margin: 0;
+    }
+
+    &__posts__body {
+      margin: 0;
+    }
+  }
+}

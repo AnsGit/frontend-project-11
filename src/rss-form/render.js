@@ -52,11 +52,6 @@ const render = ({ form, state = null, data = [], host = null }) => {
 
   const [path, value, previousValue] = data;
 
-  console.log('NEW UPDATE:');
-  console.log('-------------------------------');
-  console.log(path, value, previousValue);
-  console.log('-------------------------------');
-
   if (state.status === STATUS.PROCESSING) {
     input.element.disabled = false;
     submit.disabled = false;

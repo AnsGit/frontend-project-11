@@ -1,9 +1,9 @@
-import i18n from 'i18next';
 import onChange from 'on-change';
 import create from './create.js';
 import render from './render.js';
 import subscribe from './subscribe.js';
-import Form from '../rss-form/index.js';
+import RSSForm from '../rss-form/index.js';
+import './style.scss';
 
 class App {
   constructor(host) {
@@ -24,15 +24,19 @@ class App {
     this.dom = create();
 
     // Form
-    this.form = new Form();
+    this.form = new RSSForm();
+
+    this.feeds = [];
+    this.posts = [];
 
     return this;
   }
 
   initState() {
     const initialState = {
-      form: Form.state(),
-      feeds: [], // { url: '' }
+      form: RSSForm.state(),
+      feeds: [], // { ID: '', title: '', description: '', url: '' }
+      posts: [], // { ID: '', feedID: '', title: '', url: '' }
     };
 
     this.state = onChange(initialState, this.render.bind(this));
@@ -44,6 +48,8 @@ class App {
     render({
       dom: this.dom,
       form: this.form,
+      feeds: this.feeds,
+      posts: this.posts,
       state: this.state,
       data,
       host: this.host,

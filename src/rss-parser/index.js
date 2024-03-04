@@ -14,26 +14,43 @@ const parseRSS = (RSSNode) => {
   return {
     title: title.textContent,
     description: description.textContent,
-    items: items.map((item) => {
-      const itemTitle = item.querySelector('title');
-      const itemLink = item.querySelector('link');
+    posts: items.map((post) => {
+      const postTitle = post.querySelector('title');
+      const postLink = post.querySelector('link');
 
       return {
-        title: itemTitle.textContent,
-        url: itemLink.textContent,
+        title: postTitle.textContent,
+        url: postLink.textContent,
       };
     }),
   };
 };
 
-export default (url) => {
+export default (url, props = { timeout: 5000 }) => {
   const proxyUrl = 'https://allorigins.hexlet.app/get';
   const settings = { params: { charset: 'ISO-8859-1', url } };
 
-  return axios
-    .get(proxyUrl, settings)
+  const promise = new Promise((resolve, reject) => {
+    const tm = setTimeout(reject, props.timeout, { code: 'ERR_TIMEOUT' });
+
+    axios
+      .get(proxyUrl, settings)
+      .catch((error) => {
+        clearTimeout(tm);
+        reject(error);
+      })
+      .then((response) => {
+        clearTimeout(tm);
+        resolve(response);
+      });
+  });
+
+  return promise
     .catch((err) => {
-      throw err?.code === 'ERR_NETWORK' ? err : { code: 'ERR_UNKNOWN' };
+      const isUnknownError =
+        !err.code || !['ERR_NETWORK', 'ERR_TIMEOUT'].includes(err?.code);
+
+      throw !isUnknownError ? err : { code: 'ERR_UNKNOWN' };
     })
     .then((response) => {
       try {

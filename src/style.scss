@@ -1,15 +1,2 @@
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap/scss/utilities';
-
-$cls: 'rss-agregator';
-
-.#{$cls} {
-  &__head {
-    padding: 20px 0;
-    background-color: var(--bs-highlight-bg);
-  }
-
-  &__body {
-    padding: 20px;
-  }
-}

@@ -1,6 +1,7 @@
 #rss-form {
   margin: 0 auto;
-  width: 400px;
+  height: 64px;
+  width: 470px;
 
   .form-group {
     label {
@@ -16,6 +17,7 @@
 
     .feedback {
       display: block;
+      margin-top: 0.35rem;
     }
   }
 

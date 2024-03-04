@@ -15,4 +15,5 @@ export const FEEDBACK = {
   ERR_XML: 'err-xml',
   ERR_RSS: 'err-rss',
   ERR_UNKNOWN: 'err-unknown',
+  ERR_TIMEOUT: 'err-timeout',
 };

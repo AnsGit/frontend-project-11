@@ -3,7 +3,7 @@ import render from './render.js';
 import subscribe from './subscribe.js';
 import './style.scss';
 
-class Form {
+class RSSForm {
   constructor() {
     this.create();
 
@@ -39,4 +39,4 @@ class Form {
   }
 }
 
-export default Form;
+export default RSSForm;

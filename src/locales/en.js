@@ -17,6 +17,7 @@ export default {
       'rss-added': 'RSS added!',
 
       'err-network': 'network error',
+      'err-timeout': 'timeout has expired; try again later',
       'err-unknown': 'unknown error',
       'err-xml': 'page is not an RSS source',
       'err-rss': 'RSS reading error; try another address',

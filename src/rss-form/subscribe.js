@@ -18,6 +18,7 @@ const validate = ({ state, formSchema, form }) => {
     group: { input },
   } = form;
 
+  input.element.value = input.element.value.trim();
   state.input.value = input.element.value;
 
   const formData = new FormData(element);

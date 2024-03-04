@@ -1,12 +1,27 @@
+import _ from 'lodash';
 import { FEEDBACK, STATUS } from '../const/index.js';
 import requestRSS from '../rss-parser/index.js';
 
 const addFeed = (url, state) => {
   return requestRSS(url).then((result) => {
-    state.feeds.push({ url });
+    const feed = {
+      url,
+      ID: `feed-${_.uniqueId()}`,
+      title: result.title,
+      description: result.description,
+    };
 
-    console.log('NEW RSS!!!!!!');
-    console.log(result);
+    const posts = result.posts.map(({ title, url }) => {
+      return {
+        ID: `post-${_.uniqueId()}`,
+        feed: { ID: feed.ID },
+        title,
+        url,
+      };
+    });
+
+    state.feeds.push(feed);
+    state.posts.push(...posts);
   });
 };
 

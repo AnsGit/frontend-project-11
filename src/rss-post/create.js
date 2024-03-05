@@ -15,7 +15,7 @@ const create = (props = {}) => {
   button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
   button.dataset.id = props.ID;
   button.dataset.bsToggle = 'modal';
-  button.dataset.bsTarget = `#rss-modal`;
+  button.dataset.bsTarget = `#${props.modal.ID}`;
 
   element.append(link, button);
 

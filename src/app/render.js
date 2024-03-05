@@ -29,7 +29,7 @@ const renderFeeds = ({ dom, feeds, state = null, data = [] }) => {
   });
 };
 
-const renderPosts = ({ dom, posts, state = null, data = [] }) => {
+const renderPosts = ({ dom, posts, modal, state = null, data = [] }) => {
   dom.posts.title.textContent = i18n.t('posts');
   dom.posts.element.prepend(dom.posts.title);
 
@@ -64,7 +64,12 @@ const renderPosts = ({ dom, posts, state = null, data = [] }) => {
   postsSettingsList.forEach(({ ID, title, url }) => {
     const postIndex = posts.length;
 
-    const post = new RSSPost({ ID, title, url });
+    const post = new RSSPost({
+      ID,
+      title,
+      url,
+      modal: { ID: modal.getProp('ID') },
+    });
 
     post.render({ host: dom.posts.body, side: 'left' });
     post.subscribe({ state: state.ui.posts[postIndex] });
@@ -73,19 +78,10 @@ const renderPosts = ({ dom, posts, state = null, data = [] }) => {
   });
 };
 
-const renderModal = ({ dom, posts, state, post: { index } }) => {
-  const { title, description } = state.posts[index];
-
-  dom.modal.title.textContent = title;
-  dom.modal.body.textContent = description;
-  dom.modal.button.textContent = i18n.t('close');
-
-  posts[index].render({ viewed: true });
-};
-
 const render = ({
   dom,
   form,
+  modal,
   feeds,
   posts,
   state = null,
@@ -95,7 +91,7 @@ const render = ({
   const isFirstRender = !data.length;
 
   if (isFirstRender) {
-    document.body.append(dom.modal.element);
+    modal.render({ host: document.body });
 
     host.append(dom.head, dom.body);
     host.classList.add('rss-agregator');
@@ -119,15 +115,18 @@ const render = ({
   }
 
   if (pathKey === 'posts') {
-    renderPosts({ dom, posts, state, data: restData });
+    renderPosts({ dom, posts, modal, state, data: restData });
   }
 
   const matchPath = path.match(/^ui\.posts\.(\d+)\.viewed$/);
 
   if (matchPath && data[1] === true) {
-    const postIndex = matchPath[1];
+    const index = matchPath[1];
 
-    renderModal({ dom, posts, state, post: { index: postIndex } });
+    const { title, description } = state.posts[index];
+
+    modal.render({ title, description });
+    posts[index].render({ viewed: true });
   }
 };
 

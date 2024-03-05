@@ -3,6 +3,7 @@ import create from './create.js';
 import render from './render.js';
 import subscribe from './subscribe.js';
 import RSSForm from '../rss-form/index.js';
+import RSSModal from '../rss-modal/index.js';
 import './style.scss';
 
 class App {
@@ -25,6 +26,9 @@ class App {
 
     // Form
     this.form = new RSSForm();
+
+    // Modal
+    this.modal = new RSSModal();
 
     this.feeds = [];
     this.posts = [];
@@ -53,6 +57,7 @@ class App {
       form: this.form,
       feeds: this.feeds,
       posts: this.posts,
+      modal: this.modal,
       state: this.state,
       data,
       host: this.host,
@@ -62,7 +67,7 @@ class App {
   }
 
   subscribe() {
-    subscribe({ form: this.form, state: this.state });
+    subscribe({ form: this.form, modal: this.modal, state: this.state });
 
     return this;
   }

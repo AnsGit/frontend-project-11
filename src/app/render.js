@@ -33,6 +33,19 @@ const renderPosts = ({ dom, posts, state = null, data = [] }) => {
   dom.posts.title.textContent = i18n.t('posts');
   dom.posts.element.prepend(dom.posts.title);
 
+  // Remove non-exsistent posts
+  posts = posts.filter((post) => {
+    const toRemovePost = state.posts.every((postState) => {
+      return postState.url !== post.getProp('ID');
+    });
+
+    if (toRemovePost) {
+      post.getElement().remove();
+    }
+
+    return !toRemovePost;
+  });
+
   const [, , , applyData] = data;
 
   let postsSettingsList;

@@ -4,25 +4,53 @@ import requestRSS from '../rss-parser/index.js';
 
 const addFeed = (url, state) => {
   return requestRSS(url).then((result) => {
-    const feed = {
-      url,
-      ID: `feed-${_.uniqueId()}`,
-      title: result.title,
-      description: result.description,
-    };
+    const feed = state.feeds.find((feedState) => feedState.url === url);
 
-    const posts = result.posts.map(({ title, url }) => {
-      return {
-        ID: `post-${_.uniqueId()}`,
-        feed: { ID: feed.ID },
-        title,
+    let feedID;
+
+    // Use existing feed
+    if (feed !== undefined) {
+      feedID = feed.ID;
+    }
+    // Save new feed
+    else {
+      feedID = `feed-${_.uniqueId()}`;
+
+      const newFeed = {
+        ID: feedID,
         url,
+        title: result.title,
+        description: result.description,
       };
-    });
 
-    state.feeds.push(feed);
+      state.feeds.push(newFeed);
+    }
+
+    const posts = result.posts
+      .filter((data) => {
+        return state.posts.every((postState) => postState.url !== data.url);
+      })
+      .map(({ title, url }) => {
+        return {
+          ID: `post-${_.uniqueId()}`,
+          url,
+          title,
+          feed: { ID: feedID },
+        };
+      });
+
     state.posts.push(...posts);
   });
+};
+
+const observeFeeds = (state, props = { interval: 5000 }) => {
+  setTimeout(() => {
+    const promises = state.feeds.map(({ url }) => addFeed(url, state));
+
+    Promise.all(promises)
+      .catch(() => observeFeeds(state, props))
+      .then(() => observeFeeds(state, props));
+  }, props.interval);
 };
 
 const subscribe = ({ form, state = null }) => {
@@ -68,6 +96,8 @@ const subscribe = ({ form, state = null }) => {
         });
     },
   });
+
+  observeFeeds(state);
 };
 
 export default subscribe;

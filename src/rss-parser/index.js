@@ -26,9 +26,12 @@ const parseRSS = (RSSNode) => {
   };
 };
 
-export default (url, props = { timeout: 5000 }) => {
+export default (url, props = { timeout: 10000 }) => {
   const proxyUrl = 'https://allorigins.hexlet.app/get';
-  const settings = { params: { charset: 'ISO-8859-1', url } };
+
+  const settings = {
+    params: { charset: 'ISO-8859-1', disableCache: true, url },
+  };
 
   const promise = new Promise((resolve, reject) => {
     const tm = setTimeout(reject, props.timeout, { code: 'ERR_TIMEOUT' });

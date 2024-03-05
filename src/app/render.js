@@ -33,18 +33,18 @@ const renderPosts = ({ dom, posts, state = null, data = [] }) => {
   dom.posts.title.textContent = i18n.t('posts');
   dom.posts.element.prepend(dom.posts.title);
 
-  // Remove non-exsistent posts
-  posts = posts.filter((post) => {
-    const toRemovePost = state.posts.every((postState) => {
-      return postState.url !== post.getProp('ID');
-    });
+  // // Remove non-exsistent posts
+  // posts = posts.filter((post) => {
+  //   const toRemovePost = state.posts.every((postState) => {
+  //     return postState.url !== post.getProp('ID');
+  //   });
 
-    if (toRemovePost) {
-      post.getElement().remove();
-    }
+  //   if (toRemovePost) {
+  //     post.getElement().remove();
+  //   }
 
-    return !toRemovePost;
-  });
+  //   return !toRemovePost;
+  // });
 
   const [, , , applyData] = data;
 
@@ -62,11 +62,25 @@ const renderPosts = ({ dom, posts, state = null, data = [] }) => {
   }
 
   postsSettingsList.forEach(({ ID, title, url }) => {
+    const postIndex = posts.length;
+
     const post = new RSSPost({ ID, title, url });
 
     post.render({ host: dom.posts.body, side: 'left' });
+    post.subscribe({ state: state.ui.posts[postIndex] });
+
     posts.push(post);
   });
+};
+
+const renderModal = ({ dom, posts, state, post: { index } }) => {
+  const { title, description } = state.posts[index];
+
+  dom.modal.title.textContent = title;
+  dom.modal.body.textContent = description;
+  dom.modal.button.textContent = i18n.t('close');
+
+  posts[index].render({ viewed: true });
 };
 
 const render = ({
@@ -81,6 +95,8 @@ const render = ({
   const isFirstRender = !data.length;
 
   if (isFirstRender) {
+    document.body.append(dom.modal.element);
+
     host.append(dom.head, dom.body);
     host.classList.add('rss-agregator');
 
@@ -104,6 +120,14 @@ const render = ({
 
   if (pathKey === 'posts') {
     renderPosts({ dom, posts, state, data: restData });
+  }
+
+  const matchPath = path.match(/^ui\.posts\.(\d+)\.viewed$/);
+
+  if (matchPath && data[1] === true) {
+    const postIndex = matchPath[1];
+
+    renderModal({ dom, posts, state, post: { index: postIndex } });
   }
 };
 

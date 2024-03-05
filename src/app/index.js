@@ -37,6 +37,9 @@ class App {
       form: RSSForm.state(),
       feeds: [], // { ID: '', title: '', description: '', url: '' }
       posts: [], // { ID: '', feedID: '', title: '', url: '' }
+      ui: {
+        posts: [], // { viewed: false }
+      },
     };
 
     this.state = onChange(initialState, this.render.bind(this));

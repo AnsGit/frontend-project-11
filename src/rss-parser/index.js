@@ -17,10 +17,12 @@ const parseRSS = (RSSNode) => {
     posts: items.map((post) => {
       const postTitle = post.querySelector('title');
       const postLink = post.querySelector('link');
+      const postDescription = post.querySelector('description');
 
       return {
         title: postTitle.textContent,
         url: postLink.textContent,
+        description: postDescription.textContent,
       };
     }),
   };

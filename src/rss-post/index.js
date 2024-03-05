@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import create from './create.js';
 import render from './render.js';
+import subscribe from './subscribe.js';
 import './style.scss';
 
 class RSSPost {
@@ -27,6 +28,12 @@ class RSSPost {
 
   render(props) {
     render({ dom: this.dom, ...props });
+
+    return this;
+  }
+
+  subscribe(props = {}) {
+    subscribe({ dom: this.dom, ...props });
 
     return this;
   }

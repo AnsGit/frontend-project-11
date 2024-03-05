@@ -30,14 +30,21 @@ const addFeed = (url, state) => {
       .filter((data) => {
         return state.posts.every((postState) => postState.url !== data.url);
       })
-      .map(({ title, url }) => {
+      .map(({ title, description, url }) => {
         return {
           ID: `post-${_.uniqueId()}`,
           url,
           title,
+          description,
           feed: { ID: feedID },
         };
       });
+
+    state.ui.posts.push(
+      ...posts.map((p) => {
+        return { viewed: false };
+      }),
+    );
 
     state.posts.push(...posts);
   });

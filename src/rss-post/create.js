@@ -1,6 +1,6 @@
 const create = (props = {}) => {
   const element = document.createElement('li');
-  element.classList.add('rss-post', 'list-group-item');
+  element.classList.add('rss-post', 'list-group-item', 'fw-bold');
   element.id = props.ID;
 
   const link = document.createElement('a');
@@ -9,9 +9,17 @@ const create = (props = {}) => {
   link.target = '_blank';
   link.textContent = props.title;
 
-  element.append(link);
+  const button = document.createElement('button');
 
-  return { element, link };
+  button.type = 'button';
+  button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
+  button.dataset.id = props.ID;
+  button.dataset.bsToggle = 'modal';
+  button.dataset.bsTarget = `#rss-modal`;
+
+  element.append(link, button);
+
+  return { element, link, button };
 };
 
 export default create;

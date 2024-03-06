@@ -1,8 +1,13 @@
 import i18n from 'i18next';
 
-const render = ({ dom, host = null, viewed = false, side = 'right' }) => {
+const render = ({
+  dom,
+  host = null,
+  viewed = false,
+  side = 'right',
+}) => {
   if (viewed) {
-    dom.element.classList.replace('fw-bold', 'fw-normal');
+    dom.link.classList.replace('fw-bold', 'fw-normal');
   }
 
   const parent = dom.element.parentElement;

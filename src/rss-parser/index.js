@@ -52,8 +52,8 @@ export default (url, props = { timeout: 30000 }) => {
 
   return promise
     .catch((err) => {
-      const isUnknownError =
-        !err.code || !['ERR_NETWORK', 'ERR_TIMEOUT'].includes(err?.code);
+      const errCodes = ['ERR_NETWORK', 'ERR_TIMEOUT'];
+      const isUnknownError = !err.code || !errCodes.includes(err?.code);
 
       throw !isUnknownError ? err : { code: 'ERR_UNKNOWN' };
     })

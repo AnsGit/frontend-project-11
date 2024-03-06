@@ -36,7 +36,12 @@ const renderInputFeedback = (input, result) => {
   });
 };
 
-const render = ({ form, state = null, data = [], host = null }) => {
+const render = ({
+  form,
+  state = null,
+  data = [],
+  host = null,
+}) => {
   // Append to host
   if (host !== null) host.append(form.element);
 
@@ -47,7 +52,7 @@ const render = ({ form, state = null, data = [], host = null }) => {
 
   input.label.textContent = i18n.t('rss-form.input.label');
   input.element.placeholder = i18n.t('rss-form.input.placeholder');
-  submit.value = i18n.t('rss-form.submit');
+  submit.textContent = i18n.t('rss-form.submit');
 
   // Return if this is first render
   if (state === null) return;

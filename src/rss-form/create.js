@@ -32,13 +32,13 @@ const create = () => {
   input.type = 'text';
   input.id = 'rss-form__link-input';
   input.classList.add('form-control');
-  input.setAttribute('area-label', 'url');
+  input.setAttribute('aria-label', 'url');
 
   inputGroup.append(inputLabel, input);
   cols[0].append(inputGroup);
 
   // Submit
-  const submit = document.createElement('input');
+  const submit = document.createElement('button');
   submit.type = 'submit';
   submit.classList.add('btn', 'btn-primary');
 

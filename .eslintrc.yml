@@ -25,8 +25,8 @@ rules:
   linebreak-style:
     - error
     - unix
-  object-curly-newline:
-    - 0
+  # object-curly-newline:
+  #   - 0
   no-param-reassign: ['error', { 'props': false }]
   quotes:
     - error
@@ -36,14 +36,15 @@ rules:
     - always
   no-console:
     - off
-  brace-style:
-    - off
-  arrow-body-style:
-    - off
-  no-shadow:
-    - off
-  operator-linebreak:
-    ['error', 'after', { 'overrides': { '?': 'before', ':': 'before' } }]
+  # brace-style:
+  #   - error
+  #   - stroustrup
+  # arrow-body-style:
+  #   - off
+  # no-shadow:
+  #   - off
+  # operator-linebreak:
+  #   ['error', 'after', { 'overrides': { '?': 'before', ':': 'before' } }]
   import/extensions:
     - error
     - ignorePackages

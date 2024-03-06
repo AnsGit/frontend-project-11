@@ -4,11 +4,13 @@ import { STATUS } from '../const/index.js';
 const clearInputFeedback = (input) => {
   input.element.classList.remove('is-invalid');
 
+  // eslint-disable-next-line
   while (true) {
     const nextSibling = input.element.nextElementSibling;
 
     if (nextSibling && nextSibling.classList.contains('feedback')) {
       nextSibling.remove();
+      // eslint-disable-next-line
       continue;
     }
 
@@ -50,7 +52,7 @@ const render = ({ form, state = null, data = [], host = null }) => {
   // Return if this is first render
   if (state === null) return;
 
-  const [path, value, previousValue] = data;
+  const [path, value] = data;
 
   if (state.status === STATUS.PROCESSING) {
     input.element.disabled = false;

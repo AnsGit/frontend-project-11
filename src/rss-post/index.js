@@ -8,8 +8,6 @@ class RSSPost {
   constructor(props = {}) {
     this.props = _.merge({}, props);
     this.create(props);
-
-    return this;
   }
 
   getProp(key) {

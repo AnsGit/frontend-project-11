@@ -2,6 +2,7 @@ const create = (props = {}) => {
   const element = document.createElement('div');
   element.classList.add('modal', 'fade', 'rss-modal');
   element.id = props.ID;
+  element.role = 'button';
 
   const dialog = document.createElement('div');
   dialog.classList.add('modal-dialog');

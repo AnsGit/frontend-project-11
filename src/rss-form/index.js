@@ -6,8 +6,6 @@ import './style.scss';
 class RSSForm {
   constructor() {
     this.create();
-
-    return this;
   }
 
   create() {

@@ -8,8 +8,6 @@ class RSSModal {
   constructor(props = { ID: 'rss-modal' }) {
     this.props = _.merge({}, props);
     this.create(props);
-
-    return this;
   }
 
   getProp(key) {

@@ -61,13 +61,15 @@ export default (url, props = { timeout: 10000 }) => {
       try {
         return parseXML(response.data.contents);
       } catch (err) {
+        // eslint-disable-next-line
         throw { code: 'ERR_XML' };
       }
     })
     .then((RSS) => {
       try {
         return parseRSS(RSS);
-      } catch (error) {
+      } catch (err) {
+        // eslint-disable-next-line
         throw { code: 'ERR_RSS' };
       }
     });

@@ -2,24 +2,16 @@ import i18n from 'i18next';
 import RSSFeed from '../rss-feed/index.js';
 import RSSPost from '../rss-post/index.js';
 
-const renderFeeds = ({ dom, feeds, state = null, data = [] }) => {
+const renderFeeds = ({ dom, feeds, data = [] }) => {
   dom.feeds.title.textContent = i18n.t('feeds');
   dom.feeds.element.prepend(dom.feeds.title);
 
   const [, , , applyData] = data;
 
-  let feedsSettingsList;
+  if (!['push', 'unshift'].includes(applyData.name)) return;
 
   // Add new feeds
-  if (['push', 'unshift'].includes(applyData.name)) {
-    feedsSettingsList = applyData.args;
-  }
-  // Add all feeds
-  else {
-    dom.feeds.innerHTML = '';
-    feeds = [];
-    feedsSettingsList = state.feeds;
-  }
+  const feedsSettingsList = applyData.args;
 
   feedsSettingsList.forEach(({ ID, title, description }) => {
     const feed = new RSSFeed({ ID, title, description });
@@ -48,18 +40,10 @@ const renderPosts = ({ dom, posts, modal, state = null, data = [] }) => {
 
   const [, , , applyData] = data;
 
-  let postsSettingsList;
+  if (!['push', 'unshift'].includes(applyData.name)) return;
 
   // Add new feeds
-  if (['push', 'unshift'].includes(applyData.name)) {
-    postsSettingsList = applyData.args;
-  }
-  // Add all feeds
-  else {
-    dom.posts.innerHTML = '';
-    posts = [];
-    postsSettingsList = state.posts;
-  }
+  const postsSettingsList = applyData.args;
 
   postsSettingsList.forEach(({ ID, title, url }) => {
     const postIndex = posts.length;

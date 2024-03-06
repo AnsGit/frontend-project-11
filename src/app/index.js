@@ -10,8 +10,6 @@ class App {
   constructor(host) {
     this.host = host;
     this.init();
-
-    return this;
   }
 
   init() {

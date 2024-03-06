@@ -1,7 +1,7 @@
 const subscribe = ({ dom, state = null }) => {
   const { button } = dom;
 
-  button.addEventListener('click', (e) => {
+  button.addEventListener('click', () => {
     state.viewed = true;
   });
 };

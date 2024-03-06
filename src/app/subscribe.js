@@ -41,7 +41,7 @@ const addFeed = (url, state) => {
       });
 
     state.ui.posts.push(
-      ...posts.map((p) => {
+      ...posts.map(() => {
         return { viewed: false };
       }),
     );
@@ -63,7 +63,7 @@ const observeFeeds = (state, props = { interval: 5000 }) => {
 const subscribe = ({ form, state = null }) => {
   form.subscribe({
     state: state.form,
-    onInput: (value) => {
+    onInput: () => {
       // console.log('input: ', value);
     },
     onSubmit: (fState) => {

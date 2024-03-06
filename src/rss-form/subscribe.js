@@ -1,5 +1,5 @@
-import { STATUS, FEEDBACK } from '../const/index.js';
 import { object, string, setLocale } from 'yup';
+import { STATUS, FEEDBACK } from '../const/index.js';
 
 setLocale({
   string: {
@@ -28,7 +28,7 @@ const validate = ({ state, formSchema, form }) => {
 
   return formSchema
     .validate(formDataObject)
-    .then((result) => {
+    .then(() => {
       state.input.result = { type: STATUS.SUCCESS, messages: [] };
       return state;
     })
@@ -36,7 +36,7 @@ const validate = ({ state, formSchema, form }) => {
       state.input.result = { type: data.name, messages: [data.message] };
       return state;
     })
-    .then((result) => {
+    .then(() => {
       state.status = STATUS.PROCESSING;
       return state;
     });
@@ -53,7 +53,7 @@ const subscribe = ({
     group: { input },
   } = form;
 
-  input.element.addEventListener('input', (e) => {
+  input.element.addEventListener('input', () => {
     onInput(state.input.value);
   });
 

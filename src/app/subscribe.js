@@ -11,8 +11,7 @@ const addFeed = (url, state) => {
     if (feed !== undefined) {
       // Use existing feed
       feedID = feed.ID;
-    }
-    else {
+    } else {
       // Save new feed
       feedID = `feed-${_.uniqueId()}`;
 

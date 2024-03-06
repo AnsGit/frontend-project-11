@@ -60,8 +60,7 @@ export default (url, props = { timeout: 30000 }) => {
     .then((response) => {
       try {
         return parseXML(response.data.contents);
-      }
-      catch (err) {
+      } catch (err) {
         // eslint-disable-next-line
         throw { code: 'ERR_XML' };
       }
@@ -69,8 +68,7 @@ export default (url, props = { timeout: 30000 }) => {
     .then((RSS) => {
       try {
         return parseRSS(RSS);
-      }
-      catch (err) {
+      } catch (err) {
         // eslint-disable-next-line
         throw { code: 'ERR_RSS' };
       }

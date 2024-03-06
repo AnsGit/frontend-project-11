@@ -28,7 +28,7 @@ const parseRSS = (RSSNode) => {
   };
 };
 
-export default (url, props = { timeout: 10000 }) => {
+export default (url, props = { timeout: 30000 }) => {
   const proxyUrl = 'https://allorigins.hexlet.app/get';
 
   const settings = {

@@ -8,7 +8,7 @@ setLocale({
   },
 });
 
-const formSchema = object({
+const RSSFormSchema = object({
   url: string().url().min(10),
 });
 
@@ -46,7 +46,7 @@ const subscribe = ({
   form,
   state = null,
   onInput = () => {},
-  onSubmit = (state) => Promise.resolve(state),
+  onSubmit = (...args) => Promise.resolve(...args),
 }) => {
   const {
     element,
@@ -60,21 +60,19 @@ const subscribe = ({
   element.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    validate({ state, formSchema, form })
-      .then((state) => {
+    validate({ state, formSchema: RSSFormSchema, form })
+      .then(() => {
         const isError = state.input.result.type !== STATUS.SUCCESS;
 
         if (isError) throw new Error('error-gap');
         return state;
       })
-      .then((state) => {
+      .then(() => {
         state.status = STATUS.SENDING;
         return state;
       })
-      .then((state) => {
-        return onSubmit(state).then(() => state);
-      })
-      .then((state) => {
+      .then(() => onSubmit(state).then(() => state))
+      .then(() => {
         state.status = STATUS.PROCESSING;
         return state;
       })

@@ -3,17 +3,16 @@ import { FEEDBACK, STATUS } from '../const/index.js';
 import requestRSS from '../rss-parser/index.js';
 
 const addFeed = (url, state) => {
-  return requestRSS(url).then((result) => {
+  const rssResult = requestRSS(url).then((result) => {
     const feed = state.feeds.find((feedState) => feedState.url === url);
 
     let feedID;
 
-    // Use existing feed
     if (feed !== undefined) {
+      // Use existing feed
       feedID = feed.ID;
-    }
-    // Save new feed
-    else {
+    } else {
+      // Save new feed
       feedID = `feed-${_.uniqueId()}`;
 
       const newFeed = {
@@ -28,26 +27,31 @@ const addFeed = (url, state) => {
 
     const posts = result.posts
       .filter((data) => {
-        return state.posts.every((postState) => postState.url !== data.url);
+        const isPostExists = state.posts.every(
+          (postState) => postState.url !== data.url,
+        );
+
+        return isPostExists;
       })
-      .map(({ title, description, url }) => {
-        return {
+      .map((data) => {
+        const postState = {
           ID: `post-${_.uniqueId()}`,
-          url,
-          title,
-          description,
+          url: data.url,
+          title: data.title,
+          description: data.description,
           feed: { ID: feedID },
         };
+
+        return postState;
       });
 
-    state.ui.posts.push(
-      ...posts.map(() => {
-        return { viewed: false };
-      }),
-    );
+    const postsUiStates = posts.map(() => ({ viewed: false }));
+    state.ui.posts.push(...postsUiStates);
 
     state.posts.push(...posts);
   });
+
+  return rssResult;
 };
 
 const observeFeeds = (state, props = { interval: 5000 }) => {
@@ -69,9 +73,9 @@ const subscribe = ({ form, state = null }) => {
     onSubmit: (fState) => {
       if (fState.input.result.type !== STATUS.SUCCESS) return fState;
 
-      const isFeedExists = state.feeds.some(({ url }) => {
-        return url === fState.input.value;
-      });
+      const isFeedExists = state.feeds.some(
+        ({ url }) => url === fState.input.value,
+      );
 
       if (isFeedExists) {
         fState.input.result = {

@@ -21,7 +21,9 @@ const renderFeeds = ({ dom, feeds, data = [] }) => {
   });
 };
 
-const renderPosts = ({ dom, posts, modal, state = null, data = [] }) => {
+const renderPosts = (props = {}) => {
+  const { dom, posts, modal, state = null, data = [] } = props;
+
   dom.posts.title.textContent = i18n.t('posts');
   dom.posts.element.prepend(dom.posts.title);
 
@@ -95,11 +97,22 @@ const render = ({
   }
 
   if (pathKey === 'feeds') {
-    renderFeeds({ dom, feeds, state, data: restData });
+    renderFeeds({
+      dom,
+      feeds,
+      state,
+      data: restData,
+    });
   }
 
   if (pathKey === 'posts') {
-    renderPosts({ dom, posts, modal, state, data: restData });
+    renderPosts({
+      dom,
+      posts,
+      modal,
+      state,
+      data: restData,
+    });
   }
 
   const matchPath = path.match(/^ui\.posts\.(\d+)\.viewed$/);

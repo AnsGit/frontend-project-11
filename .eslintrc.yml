@@ -38,12 +38,12 @@ rules:
     - off
   brace-style:
     - off
-  arrow-body-style:
-    - off
-  no-shadow:
-    - off
-  operator-linebreak:
-    ['error', 'after', { 'overrides': { '?': 'before', ':': 'before' } }]
+  # arrow-body-style:
+  #   - off
+  # no-shadow:
+  #   - off
+  # operator-linebreak:
+  #   ['error', 'after', { 'overrides': { '?': 'before', ':': 'before' } }]
   import/extensions:
     - error
     - ignorePackages

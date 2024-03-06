@@ -32,6 +32,7 @@ const create = () => {
   input.type = 'text';
   input.id = 'rss-form__link-input';
   input.classList.add('form-control');
+  input.setAttribute('area-label', 'url');
 
   inputGroup.append(inputLabel, input);
   cols[0].append(inputGroup);

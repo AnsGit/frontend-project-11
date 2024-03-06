@@ -1,6 +1,11 @@
 import i18n from 'i18next';
 
-const render = ({ dom, host = null, viewed = false, side = 'right' }) => {
+const render = ({
+  dom,
+  host = null,
+  viewed = false,
+  side = 'right',
+}) => {
   if (viewed) {
     dom.link.classList.replace('fw-bold', 'fw-normal');
   }

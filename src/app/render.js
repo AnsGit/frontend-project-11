@@ -21,9 +21,13 @@ const renderFeeds = ({ dom, feeds, data = [] }) => {
   });
 };
 
-const renderPosts = (props = {}) => {
-  const { dom, posts, modal, state = null, data = [] } = props;
-
+const renderPosts = ({
+  dom,
+  posts,
+  modal,
+  state = null,
+  data = [],
+}) => {
   dom.posts.title.textContent = i18n.t('posts');
   dom.posts.element.prepend(dom.posts.title);
 

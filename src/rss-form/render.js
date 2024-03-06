@@ -36,7 +36,12 @@ const renderInputFeedback = (input, result) => {
   });
 };
 
-const render = ({ form, state = null, data = [], host = null }) => {
+const render = ({
+  form,
+  state = null,
+  data = [],
+  host = null,
+}) => {
   // Append to host
   if (host !== null) host.append(form.element);
 

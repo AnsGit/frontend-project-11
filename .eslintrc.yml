@@ -25,8 +25,8 @@ rules:
   linebreak-style:
     - error
     - unix
-  object-curly-newline:
-    - 0
+  # object-curly-newline:
+  #   - 0
   no-param-reassign: ['error', { 'props': false }]
   quotes:
     - error
@@ -37,7 +37,8 @@ rules:
   no-console:
     - off
   brace-style:
-    - off
+    - error
+    - stroustrup
   # arrow-body-style:
   #   - off
   # no-shadow:

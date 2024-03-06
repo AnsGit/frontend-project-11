@@ -1,0 +1,27 @@
+#rss-form {
+  margin: 0 auto;
+  height: 64px;
+  width: 470px;
+
+  .form-group {
+    label {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .form-control {
+      // ...
+    }
+
+    .feedback {
+      display: block;
+      margin-top: 0.35rem;
+    }
+  }
+
+  .btn {
+    // ...
+  }
+}

@@ -1,10 +1,11 @@
 const create = (props = {}) => {
   const element = document.createElement('li');
-  element.classList.add('rss-post', 'list-group-item', 'fw-bold');
+  element.classList.add('rss-post', 'list-group-item');
   element.id = props.ID;
 
   const link = document.createElement('a');
 
+  link.classList.add('fw-bold');
   link.href = props.url;
   link.target = '_blank';
   link.textContent = props.title;

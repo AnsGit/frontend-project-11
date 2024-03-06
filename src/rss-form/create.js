@@ -38,7 +38,7 @@ const create = () => {
   cols[0].append(inputGroup);
 
   // Submit
-  const submit = document.createElement('input');
+  const submit = document.createElement('button');
   submit.type = 'submit';
   submit.classList.add('btn', 'btn-primary');
 
